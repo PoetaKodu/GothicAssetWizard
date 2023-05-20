@@ -8,6 +8,7 @@
 
 #include "App/ProgramArgs.hpp"
 #include "UI/FrontendUtil.hpp"
+#include "OS/Terminal.hpp"
 
 namespace fs   = std::filesystem;
 namespace uapp = ubytes::app_platform;
@@ -101,6 +102,9 @@ auto main(int argc, char* argv[]) -> int
 {
   // One-time operation for convenient access later.
   store_program_args(argc, argv);
+
+  ensure_utf8_encoding_in_terminal();
+  ensure_colors_enabled_in_terminal();
 
   auto app = Application();
   return uapp::run_default(app.get_app_platform_interface());
