@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.25)
 
 project(GothicAssetWizard VERSION 0.1.0 LANGUAGES CXX)
+set(APP_NAME GothicAssetWizard)
 
 set(CMAKE_CXX_STANDARD 20)
 
@@ -9,7 +10,14 @@ file(GLOB_RECURSE BACKEND_SOURCES
 	"Backend/src/*.hpp"
 )
 
-set(APP_NAME GothicAssetWizard)
+# Remove Windows-only sources if not on Windows
+if (NOT WIN32)
+	file(GLOB_RECURSE BACKEND_SOURCES_WIN32_ONLY
+		"Backend/src/*.Windows.cpp"
+	)
+	list(REMOVE_ITEM BACKEND_SOURCES ${BACKEND_SOURCES_WIN32_ONLY})
+endif()
+
 add_executable(${APP_NAME} ${BACKEND_SOURCES} Icon.rc)
 
 # A very important step
