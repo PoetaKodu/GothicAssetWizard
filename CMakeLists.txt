@@ -12,6 +12,12 @@ file(GLOB_RECURSE BACKEND_SOURCES
 set(APP_NAME GothicAssetWizard)
 add_executable(${APP_NAME} ${BACKEND_SOURCES} Icon.rc)
 
+# A very important step
+# Apparently the MSVC doesn't default to UTF-8 encoding of source files.
+if (MSVC)
+	target_compile_options(${APP_NAME} PRIVATE /source-charset:utf-8)
+endif()
+
 set_target_properties(${APP_NAME} PROPERTIES
 	RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/bin/Debug
 	LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/bin/Debug
